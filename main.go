@@ -15,5 +15,6 @@ func main() {
 	}
 	structToMap := StructTomap(myStruct)
 	fmt.Println(structToMap)
+	fmt.Println(structToMap)
 
 }
