@@ -40,12 +40,12 @@ jobs:
         make test
         mkdir result
         mv makefile ./result/makefile
-        mv actions ./actions
+        mv actions ./result/actions
 
     - name: Archive Build artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: actions
+        name: vian_actions
         path: result
 
   Deploys:
@@ -57,7 +57,7 @@ jobs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: my-artifact
+        name: vian_actions
         
     - name: Display structure of downloaded files
       run: ls -R
