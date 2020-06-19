@@ -1,7 +1,10 @@
 all: build
 
+build:
+	go build -o actions
+
 run:
-	go run main.go hello.go
+	./actions
 
 test:
 	go test -v -cover -failfast
