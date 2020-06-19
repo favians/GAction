@@ -30,7 +30,7 @@ jobs:
 
     - name: Build
       env:
-        SUPER_SECRET: ${{ secrets.SuperSecret }}
+        SUPER_SECRET: ${{ secrets.SSH_DECRYPT_KEY }}
       run: |
         echo "$SUPER_SECRET"
         make build
@@ -61,7 +61,7 @@ jobs:
 
     - name: Build
       env:
-        SUPER_SECRET: ${{ secrets.SuperSecret }}
+        SUPER_SECRET: ${{ secrets.SSH_DECRYPT_KEY }}
       run: |
         echo $SUPER_SECRET
         go build -v .
