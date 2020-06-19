@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 )
 
-func main() {
+func homePage(w http.ResponseWriter, r *http.Request) {
 	val := Hello("Main")
 
 	fmt.Println(val)
@@ -14,7 +17,19 @@ func main() {
 		Password: "12345678",
 	}
 	structToMap := StructTomap(myStruct)
-	fmt.Println(structToMap)
-	fmt.Println(structToMap)
+	mapB, _ := json.Marshal(structToMap)
+	fmt.Println(string(mapB))
+	Hello := "Hello From ACTIONS Here Is Your Data: " + string(mapB)
+	fmt.Fprintf(w, Hello)
+	fmt.Println("Endpoint Hit: homePage")
+}
 
+func handleRequests() {
+	http.HandleFunc("/", homePage)
+	log.Fatal(http.ListenAndServe(":10000", nil))
+}
+
+func main() {
+
+	handleRequests()
 }
