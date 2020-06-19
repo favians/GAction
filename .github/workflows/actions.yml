@@ -29,8 +29,10 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Build
+      env:
+        SUPER_SECRET: ${{ secrets.SuperSecret }}
       run: |
-        echo ${{ secrets.SSH_DECRYPT_KEY }}
+        echo "$SUPER_SECRET"
         make build
 
     - name: Test
@@ -58,7 +60,9 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Build
+      env:
+        SUPER_SECRET: ${{ secrets.SuperSecret }}
       run: |
-        echo ${{ secrets.SSH_DECRYPT_KEY }}
+        echo $SUPER_SECRET
         go build -v .
 
