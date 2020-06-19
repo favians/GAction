@@ -36,33 +36,29 @@ jobs:
         make build
 
     - name: Test
-      run: make test
+      run: |
+        make test
+        mkdir result
+        mv makefile ./result/makefile
+        mv actions ./actions
+
+    - name: Archive Build artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: actions
+        path: result
 
   Deploys:
     name: Build
     needs: Unit_Test
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v2
       with:
-        go-version: ^1.13
-      id: go
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-
-    - uses: actions/cache@v2
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
-
-    - name: Build
-      env:
-        SUPER_SECRET: ${{ secrets.SSH_DECRYPT_KEY }}
-      run: |
-        echo $SUPER_SECRET
-        go build -v .
+        name: my-artifact
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
